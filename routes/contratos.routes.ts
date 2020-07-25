@@ -110,27 +110,24 @@ app.put('/contratos/remove/:id', async (req: Request, res: Response) => {
 
     const valorAnterior = await ContratosSchema.findById(id, 'visitas');
 
-    const value: any = valorAnterior?.visitas;
-    console.log(value);
 
-    if (value !== null) {
-        console.log('Entre');
-        if (value === 0) {
-            console.log('Cero');
-            return res.status(400).json({
-                ok: false,
-                err: 'Visitas agotadas'
-            });
+    if (valorAnterior) {
+        const value: any = valorAnterior.visitas;
+        if (value !== null) {
+            console.log('Entre');
+            if (value === 0) {
+                console.log('Cero');
+                return res.status(400).json({
+                    ok: false,
+                    err: 'Visitas agotadas'
+                });
+            }
+            if (value !== -1) {
+                visitas = value - 1
+            } else {
+                visitas = value;
+            }
         }
-        console.log('Mitad')
-        if (value !== -1) {
-            console.log('Restar');
-            visitas = value - 1
-        } else {
-            visitas = value;
-        }
-    } else {
-        console.log('Nel')
     }
 
     // console.log(visitas)

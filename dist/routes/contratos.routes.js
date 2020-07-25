@@ -98,32 +98,27 @@ router_1.app.post('/contratos', (req, res) => {
     });
 });
 router_1.app.put('/contratos/remove/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     let id = req.params.id;
     let visitas;
     const valorAnterior = yield contratos_model_1.default.findById(id, 'visitas');
-    const value = (_a = valorAnterior) === null || _a === void 0 ? void 0 : _a.visitas;
-    console.log(value);
-    if (value !== null) {
-        console.log('Entre');
-        if (value === 0) {
-            console.log('Cero');
-            return res.status(400).json({
-                ok: false,
-                err: 'Visitas agotadas'
-            });
+    if (valorAnterior) {
+        const value = valorAnterior.visitas;
+        if (value !== null) {
+            console.log('Entre');
+            if (value === 0) {
+                console.log('Cero');
+                return res.status(400).json({
+                    ok: false,
+                    err: 'Visitas agotadas'
+                });
+            }
+            if (value !== -1) {
+                visitas = value - 1;
+            }
+            else {
+                visitas = value;
+            }
         }
-        console.log('Mitad');
-        if (value !== -1) {
-            console.log('Restar');
-            visitas = value - 1;
-        }
-        else {
-            visitas = value;
-        }
-    }
-    else {
-        console.log('Nel');
     }
     // console.log(visitas)
     contratos_model_1.default.findByIdAndUpdate(id, { visitas }, { new: true, runValidators: true }, (err, data) => {
@@ -141,13 +136,13 @@ router_1.app.put('/contratos/remove/:id', (req, res) => __awaiter(void 0, void 0
     });
 }));
 router_1.app.put('/contratos/add/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c, _d;
+    var _a, _b, _c;
     let id = req.params.id;
     let visitas;
     const valorAnterior = yield contratos_model_1.default.findById(id, 'visitas');
-    if ((_b = valorAnterior) === null || _b === void 0 ? void 0 : _b.visitas) {
-        if (((_c = valorAnterior) === null || _c === void 0 ? void 0 : _c.visitas) !== -1) {
-            visitas = ((_d = valorAnterior) === null || _d === void 0 ? void 0 : _d.visitas) + 1;
+    if ((_a = valorAnterior) === null || _a === void 0 ? void 0 : _a.visitas) {
+        if (((_b = valorAnterior) === null || _b === void 0 ? void 0 : _b.visitas) !== -1) {
+            visitas = ((_c = valorAnterior) === null || _c === void 0 ? void 0 : _c.visitas) + 1;
         }
     }
     else {
