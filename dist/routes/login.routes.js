@@ -11,9 +11,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("./router");
-const mysql_1 = __importDefault(require("../database/mysql"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
+const usuarios_model_1 = __importDefault(require("../models/usuarios.model"));
+const gyms_model_1 = __importDefault(require("../models/gyms.model"));
 router_1.app.post('/login', (req, res) => {
     let body = req.body;
     if (body.password === "" || body.email === "") {
@@ -22,28 +23,62 @@ router_1.app.post('/login', (req, res) => {
             err: 'Los campos son invalidos'
         });
     }
-    const query = `
-    SELECT u.id, u.nombre, u.email, u.password FROM usuarios as u WHERE u.email = ${mysql_1.default.escaped(body.email)}
-    `;
-    mysql_1.default.executeQuery(query, (erro, data) => {
-        if (erro) {
-            console.log(erro);
+    usuarios_model_1.default.findOne({ email: body.email }).exec((err, data) => {
+        if (err) {
             return res.status(400).json({
                 ok: false,
-                err: 'Error de conexion',
-                erro // TODO: QUITAR ESTO
+                err
             });
         }
-        if (data.length === 0) {
+        if (!data) {
             return res.status(400).json({
                 ok: false,
-                err: 'El usuario no esta registrado'
+                err: 'No hay ninguna cuenta asociada a este correo electronico'
             });
         }
-        if (!bcrypt_1.default.compareSync(body.password, data[0]['password'])) {
+        if (!bcrypt_1.default.compareSync(body.password, data.password)) {
             return res.status(400).json({
                 ok: false,
-                err: 'El email o la contraseña son incorrectos'
+                err: {
+                    message: 'La contraseña es incorrecta'
+                }
+            });
+        }
+        let token = jwt.sign({ data }, "jkw~3bBCCg*aU^XZ2ywmKru2.=P{v-9vNp(B$w'J'KK<ufC4g$", { expiresIn: '60d' });
+        res.json({
+            ok: true,
+            data,
+            token
+        });
+    });
+});
+router_1.app.post('/login/gym', (req, res) => {
+    let body = req.body;
+    if (body.password === "" || body.email === "") {
+        return res.status(400).json({
+            ok: false,
+            err: 'Los campos son invalidos'
+        });
+    }
+    gyms_model_1.default.findOne({ email: body.email }).exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        if (!data) {
+            return res.status(400).json({
+                ok: false,
+                err: 'No hay ninguna cuenta asociada a este correo electronico'
+            });
+        }
+        if (!bcrypt_1.default.compareSync(body.password, data.password)) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'La contraseña es incorrecta'
+                }
             });
         }
         let token = jwt.sign({ data }, "jkw~3bBCCg*aU^XZ2ywmKru2.=P{v-9vNp(B$w'J'KK<ufC4g$", { expiresIn: '60d' });

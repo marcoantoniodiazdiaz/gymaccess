@@ -7,9 +7,13 @@ import ImagenesSchema from '../models/imagenes.model';
 import { MongoError } from 'mongodb';
 
 
-app.get('/imagenes', (req: Request, res: Response) => {
-    ImagenesSchema.find()
-        .populate('gym')
+app.get('/imagenes/gym/:gym', (req: Request, res: Response) => {
+    const gym = req.params.gym;
+    ImagenesSchema.find({ gym })
+        .populate({
+            path: 'gym',
+            populate: ['resenas', 'clase']
+        })
         .populate('usuario')
         .exec((err, data) => {
             if (err) {

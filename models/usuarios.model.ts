@@ -44,6 +44,7 @@ const UsuariosSchema: Schema = new Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: ['true', 'El campo "nombre" es obligatorio'],
     },
     notificaciones: {

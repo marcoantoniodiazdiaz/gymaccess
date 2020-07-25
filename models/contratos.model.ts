@@ -2,18 +2,13 @@ import mongoose, { Schema, Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 export interface IContratos extends Document {
-    gym: string
     usuario: string
     plan: string
     fecha: string
+    visitas: number
 }
 
 const ContratosSchema: Schema = new Schema({
-    gym: {
-        type: ObjectId,
-        ref: 'Gyms',
-        required: ['true', 'El campo "gym" es obligatorio'],
-    },
     usuario: {
         type: ObjectId,
         ref: 'Usuarios',
@@ -27,6 +22,10 @@ const ContratosSchema: Schema = new Schema({
     fecha: {
         type: String,
         required: ['true', 'El campo "fecha" es obligatorio'],
+    },
+    visitas: {
+        type: Number,
+        required: ['true', 'El campo "visitas" es obligatorio'],
     },
 });
 

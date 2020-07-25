@@ -10,11 +10,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const mongodb_1 = require("mongodb");
 const ContratosSchema = new mongoose_1.Schema({
-    gym: {
-        type: mongodb_1.ObjectId,
-        ref: 'Gyms',
-        required: ['true', 'El campo "gym" es obligatorio'],
-    },
     usuario: {
         type: mongodb_1.ObjectId,
         ref: 'Usuarios',
@@ -28,6 +23,10 @@ const ContratosSchema = new mongoose_1.Schema({
     fecha: {
         type: String,
         required: ['true', 'El campo "fecha" es obligatorio'],
+    },
+    visitas: {
+        type: Number,
+        required: ['true', 'El campo "visitas" es obligatorio'],
     },
 });
 // Export the model and return your IContratos interface

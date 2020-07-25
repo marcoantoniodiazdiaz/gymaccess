@@ -11,10 +11,11 @@ import usuarios from './routes/usuarios.routes';
 import login from './routes/login.routes';
 import clases from './routes/clases.routes';
 import imagenes from './routes/imagenes.routes';
-import latlong from './routes/latlong.routes';
 import planes from './routes/planes.routes';
 import visitas from './routes/visitas.routes';
 import contratos from './routes/contratos.routes';
+import resenas from './routes/resenas.routes';
+import reservaciones from './routes/reservaciones.routes';
 
 
 const server = Server.instance;
@@ -34,7 +35,6 @@ server.app.use('/', router);
 server.app.use('/', counter);
 server.app.use('/', clases);
 server.app.use('/', imagenes);
-server.app.use('/', latlong);
 server.app.use('/', planes);
 server.app.use('/', visitas);
 server.app.use('/', gym);
@@ -42,6 +42,8 @@ server.app.use('/', usuarios);
 server.app.use('/', uploads);
 server.app.use('/', contratos);
 server.app.use('/', login);
+server.app.use('/', reservaciones);
+server.app.use('/', resenas);
 
 // MySQL.instance;
 

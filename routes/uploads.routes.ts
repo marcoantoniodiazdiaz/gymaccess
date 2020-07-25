@@ -8,7 +8,6 @@ import path from 'path';
 app.use(fileUpload());
 
 app.put('/upload/:type', (req: Request, res: Response) => {
-
     const type = req.params.type;
 
     if (!req.files) {
@@ -18,7 +17,7 @@ app.put('/upload/:type', (req: Request, res: Response) => {
         });
     }
 
-    let types = ['user_profile', 'gym_profile', 'gym_users', 'gym_portraits'];
+    let types = ['user_profile', 'gym_profile'];
 
     if (types.indexOf(type) < 0) {
         return res.status(400).json({
@@ -62,7 +61,7 @@ app.put('/upload/:type', (req: Request, res: Response) => {
 
 app.get('/upload/:filename', (req: Request, res: Response) => {
     const filename = req.params.filename;
-    let pathImg = path.resolve(__dirname, `../dist/uploads/${filename}`)
+    let pathImg = path.resolve(__dirname, `../uploads/${filename}`)
 
     if (fs.existsSync(pathImg)) {
         res.sendFile(pathImg);
@@ -71,7 +70,7 @@ app.get('/upload/:filename', (req: Request, res: Response) => {
             ok: false,
             message: 'Imagen no encontrada',
             pathImg
-        })
+        });
     }
 });
 

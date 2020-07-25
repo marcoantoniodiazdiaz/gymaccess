@@ -15,7 +15,7 @@ class Server {
         this.httpServer = new http_1.default.Server(this.app);
     }
     mongoConnect() {
-        mongoose_1.default.connect('mongodb://localhost:27017/gymaccess', 
+        mongoose_1.default.connect('mongodb://127.0.0.1:27017/gymaccess', 
         //'mongodb+srv://marco_diaz:pataPON3@cluster0-jm5fl.mongodb.net/sautdiaz?retryWrites=true&w=majority',
         //URL_DB,
         { useNewUrlParser: true, useCreateIndex: true }, (err) => {

@@ -13,9 +13,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("./router");
 const _ = __importStar(require("underscore"));
 const imagenes_model_1 = __importDefault(require("../models/imagenes.model"));
-router_1.app.get('/imagenes', (req, res) => {
-    imagenes_model_1.default.find()
-        .populate('gym')
+router_1.app.get('/imagenes/gym/:gym', (req, res) => {
+    const gym = req.params.gym;
+    imagenes_model_1.default.find({ gym })
+        .populate({
+        path: 'gym',
+        populate: ['resenas', 'clase']
+    })
         .populate('usuario')
         .exec((err, data) => {
         if (err) {

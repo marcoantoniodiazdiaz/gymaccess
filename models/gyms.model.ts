@@ -2,16 +2,29 @@ import mongoose, { Schema, Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 export interface IGyms extends Document {
+    email: string
+    password: string
     direccion: string
     logo: string
     nombre: string
     clase: string
     descripcion: string
     telefono: string
-    latlong: string
+    lat: string;
+    lon: string;
+    resenas: string;
 }
 
 const GymSchema: Schema = new Schema({
+    email: {
+        type: String,
+        required: ['true', 'El campo "email" es obligatorio'],
+        unique: true
+    },
+    password: {
+        type: String,
+        required: ['true', 'El campo "password" es obligatorio'],
+    },
     direccion: {
         type: String,
         required: ['true', 'El campo "direccion" es obligatorio'],
@@ -23,6 +36,7 @@ const GymSchema: Schema = new Schema({
     nombre: {
         type: String,
         required: ['true', 'El campo "nombre" es obligatorio'],
+        unique: true
     },
     clase: {
         type: ObjectId,
@@ -37,11 +51,15 @@ const GymSchema: Schema = new Schema({
         type: String,
         required: ['true', 'El campo "telefono" es obligatorio'],
     },
-    latlong: {
+    lat: {
         type: String,
-        ref: 'LatLong',
-        required: ['true', 'El campo "latlong" es obligatorio'],
+        required: ['true', 'El campo "lat" es obligatorio'],
     },
+    lon: {
+        type: String,
+        required: ['true', 'El campo "lon" es obligatorio'],
+    },
+    resenas: [{ type: ObjectId, ref: 'Resenas' }],
 });
 
 

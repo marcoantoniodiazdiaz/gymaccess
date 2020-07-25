@@ -10,6 +10,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const mongodb_1 = require("mongodb");
 const GymSchema = new mongoose_1.Schema({
+    email: {
+        type: String,
+        required: ['true', 'El campo "email" es obligatorio'],
+        unique: true
+    },
+    password: {
+        type: String,
+        required: ['true', 'El campo "password" es obligatorio'],
+    },
     direccion: {
         type: String,
         required: ['true', 'El campo "direccion" es obligatorio'],
@@ -21,6 +30,7 @@ const GymSchema = new mongoose_1.Schema({
     nombre: {
         type: String,
         required: ['true', 'El campo "nombre" es obligatorio'],
+        unique: true
     },
     clase: {
         type: mongodb_1.ObjectId,
@@ -35,11 +45,15 @@ const GymSchema = new mongoose_1.Schema({
         type: String,
         required: ['true', 'El campo "telefono" es obligatorio'],
     },
-    latlong: {
+    lat: {
         type: String,
-        ref: 'LatLong',
-        required: ['true', 'El campo "latlong" es obligatorio'],
+        required: ['true', 'El campo "lat" es obligatorio'],
     },
+    lon: {
+        type: String,
+        required: ['true', 'El campo "lon" es obligatorio'],
+    },
+    resenas: [{ type: mongodb_1.ObjectId, ref: 'Resenas' }],
 });
 // Export the model and return your IGyms interface
 exports.default = mongoose_1.default.model('Gyms', GymSchema);

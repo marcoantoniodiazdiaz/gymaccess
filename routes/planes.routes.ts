@@ -24,6 +24,29 @@ app.get('/planes', (req: Request, res: Response) => {
         });
 });
 
+app.get('/planes/limitados/:limitado', (req: Request, res: Response) => {
+    const limitado = req.params.limitado;
+    PlanesSchema.find({
+        limitado,
+    })
+        .sort({
+            precio: 1,
+        })
+        .exec((err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                data
+            });
+        });
+});
+
 app.get('/planes/:id', (req: Request, res: Response) => {
     const id = req.params.id;
 
@@ -51,6 +74,7 @@ app.post('/planes', (req: Request, res: Response) => {
         limitado: body.limitado,
         descripcion: body.descripcion,
         precio: body.precio,
+        visitas: body.visitas,
     });
 
     PlanesSchema.create(values, (err: MongoError, data: any) => {

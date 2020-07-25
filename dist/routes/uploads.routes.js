@@ -16,7 +16,7 @@ router_1.app.put('/upload/:type', (req, res) => {
             err: 'No se a seleccionado ningun archivo'
         });
     }
-    let types = ['user_profile', 'gym_profile', 'gym_users', 'gym_portraits'];
+    let types = ['user_profile', 'gym_profile'];
     if (types.indexOf(type) < 0) {
         return res.status(400).json({
             ok: 'false',
@@ -52,7 +52,7 @@ router_1.app.put('/upload/:type', (req, res) => {
 });
 router_1.app.get('/upload/:filename', (req, res) => {
     const filename = req.params.filename;
-    let pathImg = path_1.default.resolve(__dirname, `../dist/uploads/${filename}`);
+    let pathImg = path_1.default.resolve(__dirname, `../uploads/${filename}`);
     if (fs_1.default.existsSync(pathImg)) {
         res.sendFile(pathImg);
     }

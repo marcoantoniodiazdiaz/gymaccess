@@ -28,6 +28,27 @@ router_1.app.get('/planes', (req, res) => {
         });
     });
 });
+router_1.app.get('/planes/limitados/:limitado', (req, res) => {
+    const limitado = req.params.limitado;
+    planes_model_1.default.find({
+        limitado,
+    })
+        .sort({
+        precio: 1,
+    })
+        .exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            data
+        });
+    });
+});
 router_1.app.get('/planes/:id', (req, res) => {
     const id = req.params.id;
     planes_model_1.default.findById(id)
@@ -51,6 +72,7 @@ router_1.app.post('/planes', (req, res) => {
         limitado: body.limitado,
         descripcion: body.descripcion,
         precio: body.precio,
+        visitas: body.visitas,
     });
     planes_model_1.default.create(values, (err, data) => {
         if (err) {

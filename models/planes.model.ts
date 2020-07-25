@@ -3,9 +3,10 @@ import { ObjectId } from 'mongodb';
 
 export interface IPlanes extends Document {
     nombre: string
-    limitado: string
+    limitado: boolean
     descripcion: string
     precio: number
+    visitas: number
 }
 
 const PlanesSchema: Schema = new Schema({
@@ -24,6 +25,10 @@ const PlanesSchema: Schema = new Schema({
     precio: {
         type: Number,
         required: ['true', 'El campo "precio" es obligatorio'],
+    },
+    visitas: {
+        type: Number,
+        required: ['true', 'El campo "visitas" es obligatorio'],
     },
 
 });

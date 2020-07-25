@@ -3,13 +3,17 @@ import { Router, Request, Response } from 'express';
 import { app } from './router';
 
 import GymsSchema from '../models/gyms.model';
+// import GymsSchema from '../models/gyms.model';
+
 import { MongoError } from 'mongodb';
 
 import * as _ from 'underscore';
+import bcrypt from 'bcrypt';
 
 app.get('/gym', (req: Request, res: Response) => {
-    GymsSchema.find().populate('clase').populate('latlong')
-        .sort({ nombre: 1 }).exec((err, data) => {
+
+    GymsSchema.find().populate('clase')
+        .populate('resenas').sort({ nombre: 1 }).exec((err, data: any) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -19,7 +23,7 @@ app.get('/gym', (req: Request, res: Response) => {
 
             res.json({
                 ok: true,
-                data
+                data,
             });
         });
 });
@@ -27,7 +31,7 @@ app.get('/gym', (req: Request, res: Response) => {
 app.get('/gym/:id', (req: Request, res: Response) => {
     const id = req.params.id;
 
-    GymsSchema.findById(id).sort({
+    GymsSchema.findById(id).populate('clase').sort({
         nombre: 1
     }).exec((err, data) => {
         if (err) {
@@ -44,17 +48,50 @@ app.get('/gym/:id', (req: Request, res: Response) => {
     });
 });
 
+app.get('/gym/nombre/:nombre', (req: Request, res: Response) => {
+    const nombre = req.params.nombre;
+    let regex = new RegExp(nombre);
+
+    GymsSchema.find({
+        nombre: {
+            $regex: regex,
+            $options: 'i'
+        }
+    }).populate('clase').sort({
+        nombre: 1
+    }).exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        console.log(data);
+
+        res.json({
+            ok: true,
+            data
+        });
+    });
+});
+
 app.post('/gym', (req: Request, res: Response) => {
     let body = req.body;
 
+    body.password = bcrypt.hashSync(body.password, 10);
+
     let product = new GymsSchema({
+        email: body.email,
+        password: body.password,
         direccion: body.direccion,
         logo: body.logo,
         nombre: body.nombre,
         clase: body.clase,
         descripcion: body.descripcion,
         telefono: body.telefono,
-        latlong: body.latlong,
+        lat: body.lat,
+        lon: body.lon,
     });
 
     GymsSchema.create(product, (err: MongoError, data: any) => {
@@ -75,13 +112,15 @@ app.post('/gym', (req: Request, res: Response) => {
 app.put('/gym/:id', (req: Request, res: Response) => {
     let id = req.params.id;
     let body = _.pick(req.body, [
+        'password',
         'direccion',
         'logo',
         'nombre',
         'clase',
         'descripcion',
         'telefono',
-        'latlong',
+        'lat',
+        'lon',
     ]);
 
     GymsSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {

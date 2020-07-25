@@ -13,9 +13,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("./router");
 const gyms_model_1 = __importDefault(require("../models/gyms.model"));
 const _ = __importStar(require("underscore"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 router_1.app.get('/gym', (req, res) => {
-    gyms_model_1.default.find().populate('clase').populate('latlong')
-        .sort({ nombre: 1 }).exec((err, data) => {
+    gyms_model_1.default.find().populate('clase')
+        .populate('resenas').sort({ nombre: 1 }).exec((err, data) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -24,13 +25,13 @@ router_1.app.get('/gym', (req, res) => {
         }
         res.json({
             ok: true,
-            data
+            data,
         });
     });
 });
 router_1.app.get('/gym/:id', (req, res) => {
     const id = req.params.id;
-    gyms_model_1.default.findById(id).sort({
+    gyms_model_1.default.findById(id).populate('clase').sort({
         nombre: 1
     }).exec((err, data) => {
         if (err) {
@@ -45,16 +46,44 @@ router_1.app.get('/gym/:id', (req, res) => {
         });
     });
 });
+router_1.app.get('/gym/nombre/:nombre', (req, res) => {
+    const nombre = req.params.nombre;
+    let regex = new RegExp(nombre);
+    gyms_model_1.default.find({
+        nombre: {
+            $regex: regex,
+            $options: 'i'
+        }
+    }).populate('clase').sort({
+        nombre: 1
+    }).exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        console.log(data);
+        res.json({
+            ok: true,
+            data
+        });
+    });
+});
 router_1.app.post('/gym', (req, res) => {
     let body = req.body;
+    body.password = bcrypt_1.default.hashSync(body.password, 10);
     let product = new gyms_model_1.default({
+        email: body.email,
+        password: body.password,
         direccion: body.direccion,
         logo: body.logo,
         nombre: body.nombre,
         clase: body.clase,
         descripcion: body.descripcion,
         telefono: body.telefono,
-        latlong: body.latlong,
+        lat: body.lat,
+        lon: body.lon,
     });
     gyms_model_1.default.create(product, (err, data) => {
         if (err) {
@@ -72,13 +101,15 @@ router_1.app.post('/gym', (req, res) => {
 router_1.app.put('/gym/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, [
+        'password',
         'direccion',
         'logo',
         'nombre',
         'clase',
         'descripcion',
         'telefono',
-        'latlong',
+        'lat',
+        'lon',
     ]);
     gyms_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
         if (err) {

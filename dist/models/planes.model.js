@@ -25,6 +25,10 @@ const PlanesSchema = new mongoose_1.Schema({
         type: Number,
         required: ['true', 'El campo "precio" es obligatorio'],
     },
+    visitas: {
+        type: Number,
+        required: ['true', 'El campo "visitas" es obligatorio'],
+    },
 });
 // Export the model and return your IPlanes interface
 exports.default = mongoose_1.default.model('Planes', PlanesSchema);

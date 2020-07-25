@@ -47,12 +47,14 @@ router_1.app.get('/usuarios/:id', (req, res) => {
 });
 router_1.app.post('/usuarios', (req, res) => {
     let body = req.body;
-    body.password = bcrypt_1.default.hashSync(body.password, 10);
+    body.email = body.email.trim(),
+        body.password = bcrypt_1.default.hashSync(body.password, 10);
     let values = new usuarios_model_1.default({
         nombre: body.nombre,
         foto: body.foto,
         password: body.password,
         email: body.email,
+        nac: new Date().toISOString(),
     });
     usuarios_model_1.default.create(values, (err, data) => {
         if (err) {

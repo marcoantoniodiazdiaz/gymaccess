@@ -19,7 +19,7 @@ export default class Server {
   }
 
   private mongoConnect() {
-    mongoose.connect('mongodb://localhost:27017/gymaccess',
+    mongoose.connect('mongodb://127.0.0.1:27017/gymaccess',
       //'mongodb+srv://marco_diaz:pataPON3@cluster0-jm5fl.mongodb.net/sautdiaz?retryWrites=true&w=majority',
       //URL_DB,
       { useNewUrlParser: true, useCreateIndex: true },

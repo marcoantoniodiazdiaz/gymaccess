@@ -46,14 +46,16 @@ app.get('/usuarios/:id', (req: Request, res: Response) => {
 
 app.post('/usuarios', (req: Request, res: Response) => {
 	let body = req.body;
+	body.email = body.email.trim(),
 
-	body.password = bcrypt.hashSync(body.password, 10);
+		body.password = bcrypt.hashSync(body.password, 10);
 
 	let values = new UsuariosSchema({
 		nombre: body.nombre,
 		foto: body.foto,
 		password: body.password,
 		email: body.email,
+		nac: new Date().toISOString(),
 	});
 
 	UsuariosSchema.create(values, (err: MongoError, data: any) => {
