@@ -154,15 +154,17 @@ app.put('/contratos/add/:id', async (req: Request, res: Response) => {
 
     const valorAnterior = await ContratosSchema.findById(id, 'visitas');
 
-    if (valorAnterior?.visitas) {
-        if (valorAnterior?.visitas !== -1) {
-            visitas = valorAnterior?.visitas + 1
+    if (valorAnterior) {
+        if (valorAnterior.visitas) {
+            if (valorAnterior?.visitas !== -1) {
+                visitas = valorAnterior?.visitas + 1
+            }
+        } else {
+            return res.status(400).json({
+                ok: false,
+                err: 'Visitas agotadas'
+            });
         }
-    } else {
-        return res.status(400).json({
-            ok: false,
-            err: 'Visitas agotadas'
-        });
     }
 
     ContratosSchema.findByIdAndUpdate(id, { visitas }, { new: true, runValidators: true }, (err, data) => {
