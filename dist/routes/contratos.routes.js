@@ -136,14 +136,13 @@ router_1.app.put('/contratos/remove/:id', (req, res) => __awaiter(void 0, void 0
     });
 }));
 router_1.app.put('/contratos/add/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
     let id = req.params.id;
     let visitas;
     const valorAnterior = yield contratos_model_1.default.findById(id, 'visitas');
     if (valorAnterior) {
         if (valorAnterior.visitas) {
-            if (((_a = valorAnterior) === null || _a === void 0 ? void 0 : _a.visitas) !== -1) {
-                visitas = ((_b = valorAnterior) === null || _b === void 0 ? void 0 : _b.visitas) + 1;
+            if (valorAnterior.visitas !== -1) {
+                visitas = valorAnterior.visitas + 1;
             }
         }
         else {

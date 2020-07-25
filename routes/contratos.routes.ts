@@ -156,8 +156,8 @@ app.put('/contratos/add/:id', async (req: Request, res: Response) => {
 
     if (valorAnterior) {
         if (valorAnterior.visitas) {
-            if (valorAnterior?.visitas !== -1) {
-                visitas = valorAnterior?.visitas + 1
+            if (valorAnterior.visitas !== -1) {
+                visitas = valorAnterior.visitas + 1
             }
         } else {
             return res.status(400).json({
