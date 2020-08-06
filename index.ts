@@ -31,19 +31,19 @@ server.app.use(bodyParser.json());
 server.app.use(cors({ origin: true, credentials: true }));
 
 // Rutas de MongoDB
-server.app.use('/', router);
-server.app.use('/', counter);
-server.app.use('/', clases);
-server.app.use('/', imagenes);
-server.app.use('/', planes);
-server.app.use('/', visitas);
-server.app.use('/', gym);
-server.app.use('/', usuarios);
-server.app.use('/', uploads);
-server.app.use('/', contratos);
-server.app.use('/', login);
-server.app.use('/', reservaciones);
-server.app.use('/', resenas);
+server.app.use('/api', router);
+server.app.use('/api', counter);
+server.app.use('/api', clases);
+server.app.use('/api', imagenes);
+server.app.use('/api', planes);
+server.app.use('/api', visitas);
+server.app.use('/api', gym);
+server.app.use('/api', usuarios);
+server.app.use('/api', uploads);
+server.app.use('/api', contratos);
+server.app.use('/api', login);
+server.app.use('/api', reservaciones);
+server.app.use('/api', resenas);
 
 // MySQL.instance;
 

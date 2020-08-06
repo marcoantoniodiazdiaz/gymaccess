@@ -29,19 +29,19 @@ server.app.use(body_parser_1.default.json());
 // CORS
 server.app.use(cors_1.default({ origin: true, credentials: true }));
 // Rutas de MongoDB
-server.app.use('/', router_1.default);
-server.app.use('/', counter_routes_1.default);
-server.app.use('/', clases_routes_1.default);
-server.app.use('/', imagenes_routes_1.default);
-server.app.use('/', planes_routes_1.default);
-server.app.use('/', visitas_routes_1.default);
-server.app.use('/', gym_routes_1.default);
-server.app.use('/', usuarios_routes_1.default);
-server.app.use('/', uploads_routes_1.default);
-server.app.use('/', contratos_routes_1.default);
-server.app.use('/', login_routes_1.default);
-server.app.use('/', reservaciones_routes_1.default);
-server.app.use('/', resenas_routes_1.default);
+server.app.use('/api', router_1.default);
+server.app.use('/api', counter_routes_1.default);
+server.app.use('/api', clases_routes_1.default);
+server.app.use('/api', imagenes_routes_1.default);
+server.app.use('/api', planes_routes_1.default);
+server.app.use('/api', visitas_routes_1.default);
+server.app.use('/api', gym_routes_1.default);
+server.app.use('/api', usuarios_routes_1.default);
+server.app.use('/api', uploads_routes_1.default);
+server.app.use('/api', contratos_routes_1.default);
+server.app.use('/api', login_routes_1.default);
+server.app.use('/api', reservaciones_routes_1.default);
+server.app.use('/api', resenas_routes_1.default);
 // MySQL.instance;
 server.start(() => {
     console.log(`Servidor corriendo en el puerto ${server.port}`);
