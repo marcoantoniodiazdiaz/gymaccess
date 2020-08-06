@@ -18,7 +18,6 @@ const imagenes_routes_1 = __importDefault(require("./routes/imagenes.routes"));
 const planes_routes_1 = __importDefault(require("./routes/planes.routes"));
 const visitas_routes_1 = __importDefault(require("./routes/visitas.routes"));
 const contratos_routes_1 = __importDefault(require("./routes/contratos.routes"));
-const resenas_routes_1 = __importDefault(require("./routes/resenas.routes"));
 const reservaciones_routes_1 = __importDefault(require("./routes/reservaciones.routes"));
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
@@ -44,7 +43,6 @@ server.app.use('/api', uploads_routes_1.default);
 server.app.use('/api', contratos_routes_1.default);
 server.app.use('/api', login_routes_1.default);
 server.app.use('/api', reservaciones_routes_1.default);
-server.app.use('/api', resenas_routes_1.default);
 server.app.get('*', (req, res, next) => {
     res.sendFile(path_1.default.resolve('public/index.html'));
 });

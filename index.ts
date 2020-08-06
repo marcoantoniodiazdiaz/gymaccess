@@ -14,7 +14,6 @@ import imagenes from './routes/imagenes.routes';
 import planes from './routes/planes.routes';
 import visitas from './routes/visitas.routes';
 import contratos from './routes/contratos.routes';
-import resenas from './routes/resenas.routes';
 import reservaciones from './routes/reservaciones.routes';
 import express from 'express';
 import path from 'path';
@@ -46,7 +45,6 @@ server.app.use('/api', uploads);
 server.app.use('/api', contratos);
 server.app.use('/api', login);
 server.app.use('/api', reservaciones);
-server.app.use('/api', resenas);
 server.app.get('*', (req, res, next) => {
   res.sendFile(path.resolve('public/index.html'));
 });
