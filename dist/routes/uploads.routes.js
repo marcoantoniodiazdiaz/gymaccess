@@ -8,7 +8,7 @@ const fs_1 = __importDefault(require("fs"));
 const router_1 = require("./router");
 const path_1 = __importDefault(require("path"));
 router_1.app.use(express_fileupload_1.default());
-router_1.app.put('/upload/:type', (req, res) => {
+router_1.app.post('/upload/:type', (req, res) => {
     const type = req.params.type;
     if (!req.files) {
         return res.status(400).json({
@@ -16,18 +16,11 @@ router_1.app.put('/upload/:type', (req, res) => {
             err: 'No se a seleccionado ningun archivo'
         });
     }
-    let types = ['user_profile', 'gym_profile'];
-    if (types.indexOf(type) < 0) {
-        return res.status(400).json({
-            ok: 'false',
-            err: 'El archivo no es un tipo valido'
-        });
-    }
     let file = req.files.file;
     let nombreCortado = file.name.split('.');
     let ex = nombreCortado[nombreCortado.length - 1];
     // Extensiones permitidas
-    let extensiones = ['png', 'jpg', 'jpeg'];
+    let extensiones = ['pdf', 'docx'];
     if (extensiones.indexOf(ex) < 0) {
         return res.status(400).json({
             ok: 'false',

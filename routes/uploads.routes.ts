@@ -7,7 +7,7 @@ import path from 'path';
 
 app.use(fileUpload());
 
-app.put('/upload/:type', (req: Request, res: Response) => {
+app.post('/upload/:type', (req: Request, res: Response) => {
     const type = req.params.type;
 
     if (!req.files) {
@@ -17,21 +17,12 @@ app.put('/upload/:type', (req: Request, res: Response) => {
         });
     }
 
-    let types = ['user_profile', 'gym_profile'];
-
-    if (types.indexOf(type) < 0) {
-        return res.status(400).json({
-            ok: 'false',
-            err: 'El archivo no es un tipo valido'
-        });
-    }
-
     let file = req.files.file as UploadedFile;
     let nombreCortado = file.name.split('.');
     let ex = nombreCortado[nombreCortado.length - 1];
 
     // Extensiones permitidas
-    let extensiones = ['png', 'jpg', 'jpeg'];
+    let extensiones = ['pdf', 'docx'];
 
     if (extensiones.indexOf(ex) < 0) {
         return res.status(400).json({
