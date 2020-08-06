@@ -11,6 +11,7 @@ import usuarios from './routes/usuarios.routes';
 import login from './routes/login.routes';
 import clases from './routes/clases.routes';
 import imagenes from './routes/imagenes.routes';
+import resenas from './routes/resenas.routes';
 import planes from './routes/planes.routes';
 import visitas from './routes/visitas.routes';
 import contratos from './routes/contratos.routes';
@@ -44,6 +45,7 @@ server.app.use('/api', usuarios);
 server.app.use('/api', uploads);
 server.app.use('/api', contratos);
 server.app.use('/api', login);
+server.app.use('/api', resenas);
 server.app.use('/api', reservaciones);
 server.app.get('*', (req, res, next) => {
   res.sendFile(path.resolve('public/index.html'));
