@@ -16,6 +16,8 @@ import visitas from './routes/visitas.routes';
 import contratos from './routes/contratos.routes';
 import resenas from './routes/resenas.routes';
 import reservaciones from './routes/reservaciones.routes';
+import express from 'express';
+import path from 'path';
 
 
 const server = Server.instance;
@@ -31,6 +33,7 @@ server.app.use(bodyParser.json());
 server.app.use(cors({ origin: true, credentials: true }));
 
 // Rutas de MongoDB
+server.app.use('/', (express.static('public', { redirect: false })));
 server.app.use('/api', router);
 server.app.use('/api', counter);
 server.app.use('/api', clases);
@@ -44,6 +47,9 @@ server.app.use('/api', contratos);
 server.app.use('/api', login);
 server.app.use('/api', reservaciones);
 server.app.use('/api', resenas);
+server.app.get('*', (req, res, next) => {
+  res.sendFile(path.resolve('public/index.html'));
+});
 
 // MySQL.instance;
 

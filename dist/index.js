@@ -20,6 +20,8 @@ const visitas_routes_1 = __importDefault(require("./routes/visitas.routes"));
 const contratos_routes_1 = __importDefault(require("./routes/contratos.routes"));
 const resenas_routes_1 = __importDefault(require("./routes/resenas.routes"));
 const reservaciones_routes_1 = __importDefault(require("./routes/reservaciones.routes"));
+const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const server = server_1.default.instance;
 // BodyParser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -29,6 +31,7 @@ server.app.use(body_parser_1.default.json());
 // CORS
 server.app.use(cors_1.default({ origin: true, credentials: true }));
 // Rutas de MongoDB
+server.app.use('/', (express_1.default.static('public', { redirect: false })));
 server.app.use('/api', router_1.default);
 server.app.use('/api', counter_routes_1.default);
 server.app.use('/api', clases_routes_1.default);
@@ -42,6 +45,9 @@ server.app.use('/api', contratos_routes_1.default);
 server.app.use('/api', login_routes_1.default);
 server.app.use('/api', reservaciones_routes_1.default);
 server.app.use('/api', resenas_routes_1.default);
+server.app.get('*', (req, res, next) => {
+    res.sendFile(path_1.default.resolve('public/index.html'));
+});
 // MySQL.instance;
 server.start(() => {
     console.log(`Servidor corriendo en el puerto ${server.port}`);
