@@ -12,7 +12,7 @@ import bcrypt from 'bcrypt';
 
 app.get('/gym', (req: Request, res: Response) => {
 
-    GymsSchema.find().populate('clase')
+    GymsSchema.find({ active: true }).populate('clase')
         .populate('resenas').sort({ nombre: 1 }).exec((err, data: any) => {
             if (err) {
                 return res.status(400).json({
@@ -137,5 +137,27 @@ app.put('/gym/:id', (req: Request, res: Response) => {
         });
     });
 });
+
+app.put('/gym/delete/:id', (req: Request, res: Response) => {
+    let id = req.params.id;
+    let body = _.pick(req.body, [
+        'active',
+    ]);
+
+    GymsSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            data: data
+        });
+    });
+});
+
 
 export default app;

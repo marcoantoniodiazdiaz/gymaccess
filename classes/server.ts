@@ -2,20 +2,28 @@ import express from 'express';
 import { SERVER_PORT } from '../global/environment';
 import http from 'http';
 import mongoose from 'mongoose';
+import socketIO from 'socket.io';
+
+// import * as socket from '../sockets/socket';
 
 export default class Server {
   private static _instance: Server;
   public app: express.Application;
   public port: number;
 
+  public io: socketIO.Server;
   private httpServer: http.Server;
 
   private constructor() {
     this.app = express();
     this.port = SERVER_PORT;
+    this.httpServer = new http.Server(this.app);
+
+    this.io = socketIO(this.httpServer);
+
+    this.escucharSockets();
     this.mongoConnect();
 
-    this.httpServer = new http.Server(this.app);
   }
 
   private mongoConnect() {
@@ -25,9 +33,21 @@ export default class Server {
       { useNewUrlParser: true, useCreateIndex: true },
       (err) => {
         if (err) throw err;
-        console.log('Atlas conectado');
+        console.log('🟢  Conexión de MongoDB en linea');
       }
     );
+  }
+
+  private escucharSockets() {
+    console.log('🟢  Servidor real-time en linea');
+
+    this.io.on('connection', cliente => {
+      // Conectar cliente
+      cliente.on('nueva-cita', () => {
+        this.io.emit('actualizar-cita');
+      });
+    });
+
   }
 
   public static get instance() {

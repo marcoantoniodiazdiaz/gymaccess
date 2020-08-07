@@ -11,6 +11,7 @@ export interface IUsuarios extends Document {
     password: string
     email: string
     notificacione: boolean
+    active: boolean
 }
 
 const UsuariosSchema: Schema = new Schema({
@@ -50,6 +51,10 @@ const UsuariosSchema: Schema = new Schema({
     notificaciones: {
         type: Number,
         default: 1
+    },
+    active: {
+        type: Boolean,
+        default: true,
     },
 });
 

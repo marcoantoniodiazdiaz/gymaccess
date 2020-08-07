@@ -15,7 +15,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const _ = __importStar(require("underscore"));
 const usuarios_model_1 = __importDefault(require("../models/usuarios.model"));
 router_1.app.get('/usuarios', (req, res) => {
-    usuarios_model_1.default.find().sort({ nombre: 1 }).exec((err, data) => {
+    usuarios_model_1.default.find({ active: true }).sort({ nombre: 1 }).exec((err, data) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -80,6 +80,24 @@ router_1.app.put('/usuarios/:id', (req, res) => {
         'foto',
         'password',
         'notificaciones',
+    ]);
+    usuarios_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            data: data
+        });
+    });
+});
+router_1.app.put('/usuarios/delete/:id', (req, res) => {
+    let id = req.params.id;
+    let body = _.pick(req.body, [
+        'active',
     ]);
     usuarios_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
         if (err) {

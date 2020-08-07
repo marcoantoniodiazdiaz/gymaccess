@@ -94,6 +94,7 @@ router_1.app.put('/planes/:id', (req, res) => {
         'limitado',
         'descripcion',
         'precio',
+        'visitas'
     ]);
     planes_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
         if (err) {

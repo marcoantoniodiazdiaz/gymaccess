@@ -99,6 +99,7 @@ app.put('/planes/:id', (req: Request, res: Response) => {
         'limitado',
         'descripcion',
         'precio',
+        'visitas'
     ]);
 
     PlanesSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {

@@ -12,6 +12,7 @@ export interface IGyms extends Document {
     telefono: string
     lat: string;
     lon: string;
+    active: boolean;
     resenas: string;
 }
 
@@ -58,6 +59,10 @@ const GymSchema: Schema = new Schema({
     lon: {
         type: String,
         required: ['true', 'El campo "lon" es obligatorio'],
+    },
+    active: {
+        type: Boolean,
+        default: true,
     },
     resenas: [{ type: ObjectId, ref: 'Resenas' }],
 });

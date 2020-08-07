@@ -90,4 +90,19 @@ router_1.app.put('/imagenes/:id', (req, res) => {
         });
     });
 });
+router_1.app.delete('/imagenes/:id', (req, res) => {
+    let id = req.params.id;
+    imagenes_model_1.default.findByIdAndRemove(id, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            data: data
+        });
+    });
+});
 exports.default = router_1.app;

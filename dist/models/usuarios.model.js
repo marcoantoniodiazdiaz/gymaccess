@@ -46,6 +46,10 @@ const UsuariosSchema = new mongoose_1.Schema({
         type: Number,
         default: 1
     },
+    active: {
+        type: Boolean,
+        default: true,
+    },
 });
 // Export the model and return your IUsuarios interface
 exports.default = mongoose_1.default.model('Usuarios', UsuariosSchema);

@@ -7,12 +7,16 @@ const express_1 = __importDefault(require("express"));
 const environment_1 = require("../global/environment");
 const http_1 = __importDefault(require("http"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const socket_io_1 = __importDefault(require("socket.io"));
+// import * as socket from '../sockets/socket';
 class Server {
     constructor() {
         this.app = express_1.default();
         this.port = environment_1.SERVER_PORT;
-        this.mongoConnect();
         this.httpServer = new http_1.default.Server(this.app);
+        this.io = socket_io_1.default(this.httpServer);
+        this.escucharSockets();
+        this.mongoConnect();
     }
     mongoConnect() {
         mongoose_1.default.connect('mongodb://127.0.0.1:27017/gymaccess', 
@@ -21,7 +25,16 @@ class Server {
         { useNewUrlParser: true, useCreateIndex: true }, (err) => {
             if (err)
                 throw err;
-            console.log('Atlas conectado');
+            console.log('🟢  Conexión de MongoDB en linea');
+        });
+    }
+    escucharSockets() {
+        console.log('🟢  Servidor real-time en linea');
+        this.io.on('connection', cliente => {
+            // Conectar cliente
+            cliente.on('nueva-cita', () => {
+                this.io.emit('actualizar-cita');
+            });
         });
     }
     static get instance() {

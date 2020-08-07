@@ -9,7 +9,7 @@ import { MongoError } from 'mongodb';
 
 
 app.get('/usuarios', (req: Request, res: Response) => {
-	UsuariosSchema.find().sort({ nombre: 1 }).exec((err, data) => {
+	UsuariosSchema.find({ active: true }).sort({ nombre: 1 }).exec((err, data) => {
 		if (err) {
 			return res.status(400).json({
 				ok: false,
@@ -84,6 +84,27 @@ app.put('/usuarios/:id', (req: Request, res: Response) => {
 		'foto',
 		'password',
 		'notificaciones',
+	]);
+
+	UsuariosSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
+		if (err) {
+			return res.status(400).json({
+				ok: false,
+				err
+			});
+		}
+
+		res.json({
+			ok: true,
+			data: data
+		});
+	});
+});
+
+app.put('/usuarios/delete/:id', (req: Request, res: Response) => {
+	let id = req.params.id;
+	let body = _.pick(req.body, [
+		'active',
 	]);
 
 	UsuariosSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {

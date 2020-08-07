@@ -96,4 +96,22 @@ app.put('/imagenes/:id', (req: Request, res: Response) => {
     });
 });
 
+app.delete('/imagenes/:id', (req: Request, res: Response) => {
+    let id = req.params.id;
+
+    ImagenesSchema.findByIdAndRemove(id, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            data: data
+        });
+    });
+});
+
 export default app;

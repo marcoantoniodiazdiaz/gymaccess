@@ -53,6 +53,10 @@ const GymSchema = new mongoose_1.Schema({
         type: String,
         required: ['true', 'El campo "lon" es obligatorio'],
     },
+    active: {
+        type: Boolean,
+        default: true,
+    },
     resenas: [{ type: mongodb_1.ObjectId, ref: 'Resenas' }],
 });
 // Export the model and return your IGyms interface

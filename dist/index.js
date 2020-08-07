@@ -50,5 +50,5 @@ server.app.get('*', (req, res, next) => {
 });
 // MySQL.instance;
 server.start(() => {
-    console.log(`Servidor corriendo en el puerto ${server.port}`);
+    console.log(`🟢  Servidor corriendo en el puerto ${server.port}`);
 });

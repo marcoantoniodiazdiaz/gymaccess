@@ -15,7 +15,7 @@ const gyms_model_1 = __importDefault(require("../models/gyms.model"));
 const _ = __importStar(require("underscore"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 router_1.app.get('/gym', (req, res) => {
-    gyms_model_1.default.find().populate('clase')
+    gyms_model_1.default.find({ active: true }).populate('clase')
         .populate('resenas').sort({ nombre: 1 }).exec((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -110,6 +110,24 @@ router_1.app.put('/gym/:id', (req, res) => {
         'telefono',
         'lat',
         'lon',
+    ]);
+    gyms_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            data: data
+        });
+    });
+});
+router_1.app.put('/gym/delete/:id', (req, res) => {
+    let id = req.params.id;
+    let body = _.pick(req.body, [
+        'active',
     ]);
     gyms_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
         if (err) {
