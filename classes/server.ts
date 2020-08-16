@@ -54,7 +54,7 @@ export default class Server {
     return this._instance || (this._instance = new this());
   }
 
-  start(callback: Function) {
+  start(callback: any) {
     this.httpServer.listen(this.port, callback);
   }
 }
