@@ -27,7 +27,7 @@ app.get('/planes', (req: Request, res: Response) => {
 app.get('/planes/limitados/:limitado', (req: Request, res: Response) => {
     const limitado = req.params.limitado;
     PlanesSchema.find({
-        limitado,
+        limitado
     })
         .sort({
             precio: 1,

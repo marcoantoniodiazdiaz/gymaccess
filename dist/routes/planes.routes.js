@@ -31,7 +31,7 @@ router_1.app.get('/planes', (req, res) => {
 router_1.app.get('/planes/limitados/:limitado', (req, res) => {
     const limitado = req.params.limitado;
     planes_model_1.default.find({
-        limitado,
+        limitado
     })
         .sort({
         precio: 1,
