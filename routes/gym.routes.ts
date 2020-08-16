@@ -121,6 +121,8 @@ app.put('/gym/:id', (req: Request, res: Response) => {
         'telefono',
         'lat',
         'lon',
+        'open',
+        'close',
     ]);
 
     GymsSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {

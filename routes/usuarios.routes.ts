@@ -73,6 +73,32 @@ app.post('/usuarios', (req: Request, res: Response) => {
 	});
 });
 
+// UserExists
+app.get('/usuarios/exists/email/:email', (req: Request, res: Response) => {
+	const email = req.params.email;
+
+	UsuariosSchema.findOne({ email }).exec((err, data) => {
+		if (err) {
+			return res.status(400).json({
+				ok: false,
+				err
+			});
+		}
+
+		if (!data) {
+			return res.status(400).json({
+				ok: false,
+				data: false
+			});
+		}
+
+		res.json({
+			ok: true,
+			data: true
+		});
+	});
+});
+
 app.put('/usuarios/:id', (req: Request, res: Response) => {
 	let id = req.params.id;
 	let body = _.pick(req.body, [

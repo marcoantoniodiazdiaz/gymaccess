@@ -110,6 +110,8 @@ router_1.app.put('/gym/:id', (req, res) => {
         'telefono',
         'lat',
         'lon',
+        'open',
+        'close',
     ]);
     gyms_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
         if (err) {

@@ -14,6 +14,7 @@ export interface IGyms extends Document {
     lon: string;
     active: boolean;
     resenas: string;
+    openclose: string;
 }
 
 const GymSchema: Schema = new Schema({
@@ -59,6 +60,14 @@ const GymSchema: Schema = new Schema({
     lon: {
         type: String,
         required: ['true', 'El campo "lon" es obligatorio'],
+    },
+    open: {
+        type: String,
+        default: 'No especificado',
+    },
+    close: {
+        type: String,
+        default: 'No especificado',
     },
     active: {
         type: Boolean,

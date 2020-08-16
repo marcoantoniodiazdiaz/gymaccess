@@ -53,6 +53,14 @@ const GymSchema = new mongoose_1.Schema({
         type: String,
         required: ['true', 'El campo "lon" es obligatorio'],
     },
+    open: {
+        type: String,
+        default: 'No especificado',
+    },
+    close: {
+        type: String,
+        default: 'No especificado',
+    },
     active: {
         type: Boolean,
         default: true,

@@ -69,6 +69,28 @@ router_1.app.post('/usuarios', (req, res) => {
         });
     });
 });
+// UserExists
+router_1.app.get('/usuarios/exists/email/:email', (req, res) => {
+    const email = req.params.email;
+    usuarios_model_1.default.findOne({ email }).exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        if (!data) {
+            return res.status(400).json({
+                ok: false,
+                data: false
+            });
+        }
+        res.json({
+            ok: true,
+            data: true
+        });
+    });
+});
 router_1.app.put('/usuarios/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, [
