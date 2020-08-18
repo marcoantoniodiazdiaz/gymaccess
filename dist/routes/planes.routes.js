@@ -15,6 +15,7 @@ const _ = __importStar(require("underscore"));
 const planes_model_1 = __importDefault(require("../models/planes.model"));
 router_1.app.get('/planes', (req, res) => {
     planes_model_1.default.find()
+        .populate('acepta')
         .exec((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -36,6 +37,7 @@ router_1.app.get('/planes/limitados/:limitado', (req, res) => {
         .sort({
         precio: 1,
     })
+        .populate('acepta')
         .exec((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -52,6 +54,7 @@ router_1.app.get('/planes/limitados/:limitado', (req, res) => {
 router_1.app.get('/planes/:id', (req, res) => {
     const id = req.params.id;
     planes_model_1.default.findById(id)
+        .populate('acepta')
         .exec((err, data) => {
         if (err) {
             return res.status(400).json({

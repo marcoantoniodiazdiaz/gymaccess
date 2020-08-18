@@ -6,7 +6,8 @@ export interface IPlanes extends Document {
     limitado: boolean
     descripcion: string
     precio: number
-    visitas: number
+    visitas: number,
+    acepta: string[]
 }
 
 const PlanesSchema: Schema = new Schema({
@@ -30,6 +31,7 @@ const PlanesSchema: Schema = new Schema({
         type: Number,
         required: ['true', 'El campo "visitas" es obligatorio'],
     },
+    acepta: [{ type: Schema.Types.ObjectId, ref: 'Clases', default: [] }],
 
 });
 

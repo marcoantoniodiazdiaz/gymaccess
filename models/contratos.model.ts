@@ -6,6 +6,7 @@ export interface IContratos extends Document {
     plan: string
     fecha: string
     visitas: number
+    active: boolean
 }
 
 const ContratosSchema: Schema = new Schema({
@@ -26,6 +27,10 @@ const ContratosSchema: Schema = new Schema({
     visitas: {
         type: Number,
         required: ['true', 'El campo "visitas" es obligatorio'],
+    },
+    active: {
+        type: Boolean,
+        default: true,
     },
 });
 

@@ -8,9 +8,12 @@ import { MongoError } from 'mongodb';
 
 
 app.get('/contratos', (req: Request, res: Response) => {
-    ContratosSchema.find()
+    ContratosSchema.find({ active: true })
         .populate('usuario')
-        .populate('plan')
+        .populate({
+            path: 'plan',
+            populate: ['acepta']
+        })
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({
@@ -31,7 +34,10 @@ app.get('/contratos/:id', (req: Request, res: Response) => {
 
     ContratosSchema.findById(id)
         .populate('usuario')
-        .populate('plan')
+        .populate({
+            path: 'plan',
+            populate: ['acepta']
+        })
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({
@@ -50,9 +56,12 @@ app.get('/contratos/:id', (req: Request, res: Response) => {
 app.get('/contratos/usuario/:usuario', (req: Request, res: Response) => {
     const id = req.params.usuario;
 
-    ContratosSchema.find({ usuario: id })
+    ContratosSchema.find({ usuario: id, active: true })
         .populate('usuario')
-        .populate('plan')
+        .populate({
+            path: 'plan',
+            populate: ['acepta']
+        })
         .sort({ fecha: 1 })
         .exec((err, data) => {
             if (err) {
@@ -117,6 +126,7 @@ app.put('/contratos/remove/:id', async (req: Request, res: Response) => {
             console.log('Entre');
             if (value === 0) {
                 console.log('Cero');
+                ContratosSchema.findByIdAndUpdate(id, { active: false }).exec();
                 return res.status(400).json({
                     ok: false,
                     err: 'Visitas agotadas'
@@ -160,6 +170,9 @@ app.put('/contratos/add/:id', async (req: Request, res: Response) => {
                 visitas = valorAnterior.visitas + 1
             }
         } else {
+
+            // ContratosSchema.findByIdAndUpdate(id, {  }).exec();
+
             return res.status(400).json({
                 ok: false,
                 err: 'Visitas agotadas'

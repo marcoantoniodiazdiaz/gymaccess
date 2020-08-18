@@ -9,6 +9,7 @@ import { MongoError } from 'mongodb';
 
 app.get('/planes', (req: Request, res: Response) => {
     PlanesSchema.find()
+        .populate('acepta')
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({
@@ -32,6 +33,7 @@ app.get('/planes/limitados/:limitado', (req: Request, res: Response) => {
         .sort({
             precio: 1,
         })
+        .populate('acepta')
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({
@@ -51,6 +53,7 @@ app.get('/planes/:id', (req: Request, res: Response) => {
     const id = req.params.id;
 
     PlanesSchema.findById(id)
+        .populate('acepta')
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({

@@ -28,6 +28,10 @@ const ContratosSchema = new mongoose_1.Schema({
         type: Number,
         required: ['true', 'El campo "visitas" es obligatorio'],
     },
+    active: {
+        type: Boolean,
+        default: true,
+    },
 });
 // Export the model and return your IContratos interface
 exports.default = mongoose_1.default.model('Contratos', ContratosSchema);

@@ -15,9 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("./router");
 const contratos_model_1 = __importDefault(require("../models/contratos.model"));
 router_1.app.get('/contratos', (req, res) => {
-    contratos_model_1.default.find()
+    contratos_model_1.default.find({ active: true })
         .populate('usuario')
-        .populate('plan')
+        .populate({
+        path: 'plan',
+        populate: ['acepta']
+    })
         .exec((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -35,7 +38,10 @@ router_1.app.get('/contratos/:id', (req, res) => {
     const id = req.params.id;
     contratos_model_1.default.findById(id)
         .populate('usuario')
-        .populate('plan')
+        .populate({
+        path: 'plan',
+        populate: ['acepta']
+    })
         .exec((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -51,9 +57,12 @@ router_1.app.get('/contratos/:id', (req, res) => {
 });
 router_1.app.get('/contratos/usuario/:usuario', (req, res) => {
     const id = req.params.usuario;
-    contratos_model_1.default.find({ usuario: id })
+    contratos_model_1.default.find({ usuario: id, active: true })
         .populate('usuario')
-        .populate('plan')
+        .populate({
+        path: 'plan',
+        populate: ['acepta']
+    })
         .sort({ fecha: 1 })
         .exec((err, data) => {
         if (err) {
@@ -107,6 +116,7 @@ router_1.app.put('/contratos/remove/:id', (req, res) => __awaiter(void 0, void 0
             console.log('Entre');
             if (value === 0) {
                 console.log('Cero');
+                contratos_model_1.default.findByIdAndUpdate(id, { active: false }).exec();
                 return res.status(400).json({
                     ok: false,
                     err: 'Visitas agotadas'
@@ -146,6 +156,7 @@ router_1.app.put('/contratos/add/:id', (req, res) => __awaiter(void 0, void 0, v
             }
         }
         else {
+            // ContratosSchema.findByIdAndUpdate(id, {  }).exec();
             return res.status(400).json({
                 ok: false,
                 err: 'Visitas agotadas'
