@@ -112,6 +112,8 @@ router_1.app.put('/gym/:id', (req, res) => {
         'lon',
         'open',
         'close',
+        'openDay',
+        'closeDay',
     ]);
     gyms_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
         if (err) {

@@ -14,7 +14,10 @@ export interface IGyms extends Document {
     lon: string;
     active: boolean;
     resenas: string;
-    openclose: string;
+    open: string;
+    close: string;
+    openDay: string;
+    closeDay: string;
 }
 
 const GymSchema: Schema = new Schema({
@@ -68,6 +71,14 @@ const GymSchema: Schema = new Schema({
     close: {
         type: String,
         default: 'No especificado',
+    },
+    openDay: {
+        type: String,
+        default: 'lunes',
+    },
+    closeDay: {
+        type: String,
+        default: 'viernes',
     },
     active: {
         type: Boolean,

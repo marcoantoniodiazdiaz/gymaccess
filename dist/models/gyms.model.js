@@ -61,6 +61,14 @@ const GymSchema = new mongoose_1.Schema({
         type: String,
         default: 'No especificado',
     },
+    openDay: {
+        type: String,
+        default: 'lunes',
+    },
+    closeDay: {
+        type: String,
+        default: 'viernes',
+    },
     active: {
         type: Boolean,
         default: true,

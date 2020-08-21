@@ -14,6 +14,7 @@ class Server {
         this.app = express_1.default();
         this.port = environment_1.SERVER_PORT;
         this.httpServer = new http_1.default.Server(this.app);
+        console.log('🎛   [GymAccess Server]');
         this.io = socket_io_1.default(this.httpServer);
         this.escucharSockets();
         this.mongoConnect();

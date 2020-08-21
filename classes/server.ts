@@ -19,8 +19,9 @@ export default class Server {
     this.port = SERVER_PORT;
     this.httpServer = new http.Server(this.app);
 
-    this.io = socketIO(this.httpServer);
+    console.log('🎛   [GymAccess Server]');
 
+    this.io = socketIO(this.httpServer);
     this.escucharSockets();
     this.mongoConnect();
 
@@ -55,6 +56,7 @@ export default class Server {
   }
 
   start(callback: any) {
+
     this.httpServer.listen(this.port, callback);
   }
 }

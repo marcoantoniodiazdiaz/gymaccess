@@ -123,6 +123,8 @@ app.put('/gym/:id', (req: Request, res: Response) => {
         'lon',
         'open',
         'close',
+        'openDay',
+        'closeDay',
     ]);
 
     GymsSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
