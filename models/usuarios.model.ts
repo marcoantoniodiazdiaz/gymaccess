@@ -24,11 +24,11 @@ const UsuariosSchema: Schema = new Schema({
         default: null
     },
     estatura: {
-        type: Number,
+        type: String,
         default: null
     },
     peso: {
-        type: Number,
+        type: String,
         default: null
     },
     telefono: {
