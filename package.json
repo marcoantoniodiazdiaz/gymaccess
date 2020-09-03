@@ -37,7 +37,7 @@
         "i": "^0.3.6",
         "jsonwebtoken": "^8.5.1",
         "moment": "^2.27.0",
-        "mongoose": "^5.6.9",
+        "mongoose": "^5.7.5",
         "mysql": "github:mysqljs/mysql",
         "nodemailer": "^6.4.11",
         "npm": "^6.10.3",
