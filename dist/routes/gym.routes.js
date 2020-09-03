@@ -140,12 +140,25 @@ router_1.app.put('/gym/:id', (req, res) => {
         });
     });
 });
-router_1.app.put('/gym/delete/:id', (req, res) => {
+router_1.app.put('/gym/add/horario/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, [
-        'active',
-    ]);
-    gyms_model_1.default.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
+    let body = req.body;
+    gyms_model_1.default.findByIdAndUpdate(id, { $push: { horarios: body.horario } }, { new: true, runValidators: true }, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            data: data
+        });
+    });
+});
+router_1.app.put('/gym/clean/horario/:id', (req, res) => {
+    let id = req.params.id;
+    gyms_model_1.default.findByIdAndUpdate(id, { horarios: [] }, { new: true, runValidators: true }, (err, data) => {
         if (err) {
             return res.status(400).json({
                 ok: false,

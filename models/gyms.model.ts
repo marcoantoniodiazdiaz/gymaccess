@@ -14,10 +14,7 @@ export interface IGyms extends Document {
     lon: string;
     active: boolean;
     resenas: string;
-    open: string;
-    close: string;
-    openDay: string;
-    closeDay: string;
+    horarios: string[];
 }
 
 const GymSchema: Schema = new Schema({
@@ -64,21 +61,9 @@ const GymSchema: Schema = new Schema({
         type: String,
         required: ['true', 'El campo "lon" es obligatorio'],
     },
-    open: {
-        type: String,
-        default: 'No especificado',
-    },
-    close: {
-        type: String,
-        default: 'No especificado',
-    },
-    openDay: {
-        type: String,
-        default: 'lunes',
-    },
-    closeDay: {
-        type: String,
-        default: 'viernes',
+    horarios: {
+        type: [String],
+        default: [],
     },
     active: {
         type: Boolean,

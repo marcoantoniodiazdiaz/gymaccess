@@ -65,21 +65,9 @@ const GymSchema = new mongoose_1.Schema({
         type: String,
         required: ['true', 'El campo "lon" es obligatorio'],
     },
-    open: {
-        type: String,
-        default: 'No especificado',
-    },
-    close: {
-        type: String,
-        default: 'No especificado',
-    },
-    openDay: {
-        type: String,
-        default: 'lunes',
-    },
-    closeDay: {
-        type: String,
-        default: 'viernes',
+    horarios: {
+        type: [String],
+        default: [],
     },
     active: {
         type: Boolean,

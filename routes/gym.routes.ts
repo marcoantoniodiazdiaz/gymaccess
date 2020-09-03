@@ -142,25 +142,43 @@ app.put('/gym/:id', (req: Request, res: Response) => {
     });
 });
 
-app.put('/gym/delete/:id', (req: Request, res: Response) => {
+app.put('/gym/add/horario/:id', (req: Request, res: Response) => {
     let id = req.params.id;
-    let body = _.pick(req.body, [
-        'active',
-    ]);
+    let body = req.body;
 
-    GymsSchema.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, data) => {
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                err
+    GymsSchema.findByIdAndUpdate(id, { $push: { horarios: body.horario } },
+        { new: true, runValidators: true }, (err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                data: data
             });
-        }
-
-        res.json({
-            ok: true,
-            data: data
         });
-    });
+});
+
+app.put('/gym/clean/horario/:id', (req: Request, res: Response) => {
+    let id = req.params.id;
+
+    GymsSchema.findByIdAndUpdate(id, { horarios: [] },
+        { new: true, runValidators: true }, (err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                data: data
+            });
+        });
 });
 
 
