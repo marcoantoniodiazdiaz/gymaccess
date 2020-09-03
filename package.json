@@ -27,7 +27,7 @@
         "@types/socket.io": "^2.1.2",
         "@types/underscore": "^1.9.2",
         "axios": "^0.19.0",
-        "bcrypt": "^3.0.6",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.3",
         "copyfiles": "^2.3.0",
         "cors": "^2.8.4",
