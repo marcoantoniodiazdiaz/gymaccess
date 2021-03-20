@@ -111,12 +111,15 @@ app.post('/usuarios', (req: Request, res: Response) => {
         </html>
         `;
 
+
 		const info = await transporter.sendMail({
 			from: "'Dirección GymAccess' <direccion@gymaccess.com.mx>",
 			to: data.email,
 			subject: 'Bienvenido a GymAccess',
 			html: contentHTML,
 		});
+
+		console.log("Hola");
 
 		res.json({
 			ok: true,

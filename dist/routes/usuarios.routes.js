@@ -132,6 +132,7 @@ router_1.app.post('/usuarios', (req, res) => {
             subject: 'Bienvenido a GymAccess',
             html: contentHTML,
         });
+        console.log("Hola");
         res.json({
             ok: true,
             data,

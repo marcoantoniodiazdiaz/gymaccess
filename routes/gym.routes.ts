@@ -165,7 +165,7 @@ app.put('/gym/add/horario/:id', (req: Request, res: Response) => {
 app.put('/gym/clean/horario/:id', (req: Request, res: Response) => {
     let id = req.params.id;
 
-    GymsSchema.findByIdAndUpdate(id, { horarios: [] },
+    GymsSchema.findByIdAndUpdate(id, { horario: [] },
         { new: true, runValidators: true }, (err, data) => {
             if (err) {
                 return res.status(400).json({
