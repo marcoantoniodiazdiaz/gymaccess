@@ -181,5 +181,24 @@ app.put('/gym/clean/horario/:id', (req: Request, res: Response) => {
         });
 });
 
+app.put('/gym/delete/:id', (req: Request, res: Response) => {
+    let id = req.params.id;
+
+    GymsSchema.findByIdAndUpdate(id, { active: false },
+        { new: true, runValidators: true }, (err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                data: data
+            });
+        });
+});
+
 
 export default app;
